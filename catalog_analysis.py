@@ -69,3 +69,32 @@ def decade_label(year: int) -> str:
         case _:
             return "неизвестно"
 
+def print_non_comedy_movies(movies_list: list) -> None:
+    """Выводит названия фильмов, не относящихся к жанру comedy"""
+    for movie in movies_list:
+        if "comedy" in movie["genres"]:
+            continue
+        print(movie["title"])
+
+
+def find_first_masterpiece(movies_list: list) -> None:
+    """Ищет первый фильм с рейтингом выше 9.0"""
+    i = 0
+    while i < len(movies_list):
+        if movies_list[i]["rating"] > 9.0:
+            print(f"Шедевр найден: {movies_list[i]['title']}")
+            break
+        i += 1
+    else:
+        # Ветка else срабатывает, если break не был вызван
+        print("Шедевров не найдено")
+
+
+def count_long_movies(movies_list: list, threshold: int = 120) -> int:
+    """Считает количество фильмов длиннее threshold минут"""
+    count = 0
+    for movie in movies_list:
+        if movie["duration_min"] > threshold:
+            count += 1
+    return count
+
