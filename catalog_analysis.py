@@ -200,3 +200,19 @@ def genres_only_in_one(movies_a: list, movies_b: list) -> set:
         genres_b = genres_b | movie["genres"]
 
     return genres_a - genres_b
+
+
+def iter_high_rated(movies_list: list, min_rating: float = 8.0):
+    """Функция-генератор, лениво отдающая фильмы с рейтингом >= min_rating"""
+    for movie in movies_list:
+        if movie["rating"] >= min_rating:
+            yield movie
+
+
+def total_duration_high_rated(movies_list: list, threshold: float = 7.0) -> int:
+    """Считает суммарную длительность фильмов с рейтингом выше threshold"""
+    return sum(
+        movie["duration_min"]
+        for movie in movies_list
+        if movie["rating"] > threshold
+    )
