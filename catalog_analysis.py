@@ -216,3 +216,35 @@ def total_duration_high_rated(movies_list: list, threshold: float = 7.0) -> int:
         for movie in movies_list
         if movie["rating"] > threshold
     )
+
+
+def build_report(movies_list: list) -> None:
+    """Формирует и выводит итоговый консольный отчет по каталогу"""
+    print("ОТЧЕТ ПО КАТАЛОГУ")
+    print(f"Средний рейтинг: {average_rating(movies_list)}")
+    
+    age_stats = catalog_age_stats(movies_list)
+    print(f"Средний возраст фильмов: {age_stats[2]} лет")
+    print()
+
+    print("Топ-3 фильма:")
+    top_movies = top_n_by_rating(movies_list, 3)
+    for title, _ in top_movies:
+        movie_dict = next(m for m in movies_list if m["title"] == title)
+        print(f"  {format_report_line(movie_dict)}")
+    print()
+
+    print("Фильмов по жанрам:")
+    genre_counts = count_by_genre(movies_list)
+    sorted_genres = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)
+    for genre, count in sorted_genres:
+        print(f"  {genre} — {count}")
+    print()
+
+    print("Все жанры каталога:")
+    all_unique_genres = sorted(all_genres(movies_list))
+    print(", ".join(all_unique_genres))
+
+
+if __name__ == "__main__":
+    build_report(movies)
