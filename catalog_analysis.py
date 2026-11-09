@@ -172,3 +172,31 @@ def high_rated_movies_dict(movies_list: list) -> dict:
         for movie in movies_list
         if movie["rating"] > avg_rating
     }
+
+
+def all_genres(movies_list: list) -> set:
+    """Возвращает множество всех уникальных жанров каталога"""
+    genres_set = set()
+    for movie in movies_list:
+        genres_set = genres_set | movie["genres"]
+    return genres_set
+
+
+def common_actors(movie1: dict, movie2: dict) -> set:
+    """Возвращает множество актеров, снимавшихся в обоих фильмах"""
+    actors1 = set(movie1["actors"])
+    actors2 = set(movie2["actors"])
+    return actors1 & actors2
+
+
+def genres_only_in_one(movies_a: list, movies_b: list) -> set:
+    """Возвращает жанры, которые есть в movies_a, но нет в movies_b"""
+    genres_a = set()
+    for movie in movies_a:
+        genres_a = genres_a | movie["genres"]
+
+    genres_b = set()
+    for movie in movies_b:
+        genres_b = genres_b | movie["genres"]
+
+    return genres_a - genres_b
