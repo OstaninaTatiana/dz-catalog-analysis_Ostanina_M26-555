@@ -122,3 +122,24 @@ def format_report_line(movie: dict) -> str:
     duration = duration_in_hours(movie["duration_min"])
     genres = ", ".join(sorted(movie["genres"]))
     return f'"{title}" ({year}) — {rating}/10, {duration}, жанры: {genres}'
+
+
+def titles_sorted_by_rating(movies_list: list) -> list:
+    """Возвращает названия фильмов, отсортированные по убыванию рейтинга."""
+    sorted_movies = sorted(
+        movies_list,
+        key=lambda movie: movie["rating"],
+        reverse=True,
+    )
+    return [movie["title"] for movie in sorted_movies]
+
+
+def top_n_by_rating(movies_list: list, n: int = 3) -> list:
+    """Возвращает топ-N фильмов как список кортежей (title, rating)."""
+    sorted_movies = sorted(
+        movies_list,
+        key=lambda movie: movie["rating"],
+        reverse=True,
+    )
+    return [(movie["title"], movie["rating"]) for movie in sorted_movies[:n]]
+
